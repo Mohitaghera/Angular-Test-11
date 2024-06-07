@@ -1,0 +1,24 @@
+<div class="container">
+  <form #employeeForm="ngForm" (ngSubmit)="onSave()" (ngModelChange)="updateFormValidity(employeeForm)">
+  <i class="close-icon fas fa-times" (click)="onCancel()"></i>
+  <h3 mat-dialog-title>Add Subordinate</h3>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="newEmployee.name" name="name" required pattern="[a-zA-Z ]*">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Email</mat-label>
+      <input matInput [(ngModel)]="newEmployee.email" name="email" required email>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Designation</mat-label>
+      <input matInput [(ngModel)]="newEmployee.designation" name="designation" required pattern="[a-zA-Z ]*">
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions class="mat-dialog-actions">
+    <button mat-button type="button" color="warn" (click)="onCancel()">Cancel</button>
+    <button mat-button type="submit" color="primary" [disabled]="!employeeForm.valid ">Save</button>
+  </div>
+</form>
+</div>

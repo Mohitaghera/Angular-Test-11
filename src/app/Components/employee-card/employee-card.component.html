@@ -1,0 +1,25 @@
+<mat-card class="employee-card" (click)="onCardClick()">
+  <mat-card-header>
+    <mat-card-title-group>
+      <img mat-card-sm-image [src]="employee.imageUrl" [alt]="employee.name">
+      <div class="title-text">
+      <mat-card-subtitle class="subtitle-name">{{employee.name}}</mat-card-subtitle>
+      <mat-card-subtitle class="subtitle-designation">{{employee.designation}}</mat-card-subtitle>
+    </div>
+    <mat-icon *ngIf="employee.managerId !== null" class="change-manager-icon" matTooltip="Change Manager" (click)="changeManager($event)">swap_horiz</mat-icon>
+
+    </mat-card-title-group>
+  </mat-card-header>
+  <mat-card-content> 
+    <p class="card-content"><span>Email:</span> {{employee.email}}</p>
+    <p class="card-content" *ngIf="employee.managerId"><span>Manager ID:</span> {{employee.managerId}}</p>
+    <p class="card-content" *ngIf="employee.subordinates?.length"><span>Subordinates:</span> {{employee.subordinates?.length}}</p>
+  </mat-card-content>
+  <mat-divider></mat-divider>
+  <div class="actions" (click)="clickAction($event)">
+  <button mat-button  color="primary" (click)="addSubordinate($event)">ADD SUBORDINATE</button>
+  <button mat-button color="warn" (click)="removeEmployee($event)" [disabled]="(employee.subordinates?.length ?? 0) > 0">REMOVE EMPLOYEE</button>
+</div>
+</mat-card>
+
+

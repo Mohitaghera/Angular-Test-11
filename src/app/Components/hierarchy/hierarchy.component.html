@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="company">
+    <ng-container *ngIf="data">
+      <ng-container *ngFor="let node of data">
+        <ng-template
+          [ngTemplateOutlet]="personTemplate"
+          [ngTemplateOutletContext]="{ $implicit: node }"
+        ></ng-template>
+      </ng-container>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #personTemplate let-node>
+  <div class="node">
+    <app-employee-card
+      [ngClass]="{
+        'root-node': node.managerId === null,
+        'leaf-node': !node.subordinates?.length,
+        Expanded: node.expanded
+      }"
+      class="employee-card"
+      [employee]="node"
+      (cardClick)="toggleNode(node)"
+    ></app-employee-card>
+    <div class="child" id="child" [ngClass]="{ 'margin-left': node.level > 1 }">
+      <div class="children" *ngIf="node.expanded && node.children?.length">
+        <ng-container *ngFor="let child of node.children">
+          <ng-template
+            [ngTemplateOutlet]="personTemplate"
+            [ngTemplateOutletContext]="{ $implicit: child }"
+          ></ng-template>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</ng-template>

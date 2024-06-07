@@ -1,0 +1,77 @@
+.container {
+  width: 100vw;
+  padding: 20px;
+  overflow: auto;
+  height: 100vh;
+}
+
+.company {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.node {
+  position: relative;
+  margin: 10px 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.children {
+  display: flex;
+  margin: 0 auto;
+  position: relative;
+  margin-top: 28px;
+
+}
+
+.children .node {
+  justify-self: center;
+  margin: 0 5px;
+  max-width: 300px;
+}
+
+.employee-card {
+  position: relative;
+  z-index: 99;
+}
+
+.employee-card::before,
+.Expanded::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 22px;
+  background-color: #000;
+}
+.employee-card::before {
+  top: -14px;
+}
+.Expanded::after {
+  bottom: -14px;
+}
+
+.children::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 1px;
+  background-color: #000;
+}
+.root-node::before {
+  content: none;
+}
+.leaf-node::after {
+  content: none;
+}
+.margin-left {
+  margin-left: auto;
+}

@@ -1,0 +1,19 @@
+<div class="container">
+  <i class="close-icon fas fa-times" (click)="onCancel()"></i>
+  <h3 mat-dialog-title>Selecet Reporting Manager</h3>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>New Manager</mat-label>
+      <input matInput [matAutocomplete]="auto" [(ngModel)]="selectedManagerName">
+      <mat-autocomplete class="autocomplete" #auto="matAutocomplete" (optionSelected)="onManagerSelected($event)">
+        <mat-option *ngFor="let manager of filteredManagers" [value]="manager.name">
+          {{ manager.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions class="mat-dialog-actions">
+    <button mat-button color="warn" (click)="onCancel()">Cancel</button>
+    <button mat-button color="primary" (click)="onSave()">Save</button>
+  </div>
+</div>
