@@ -57,7 +57,6 @@ export class AddSubordinateDialogComponent {
     
     this.newEmployee.id = Date.now();
     this.dialogRef.close(this.newEmployee);
-    console.log(this.employeeDataService.employees);
     
   }
   updateFormValidity(form: NgForm) {

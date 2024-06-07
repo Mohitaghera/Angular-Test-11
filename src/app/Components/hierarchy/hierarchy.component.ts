@@ -25,24 +25,30 @@ export class HierarchyComponent implements OnInit {
       this.employeeDataService.getEmployees().subscribe((employees) => {
         this.employees = employees;
         this.data = this.createOrganizationChartData();
+        
       })
     );
-   
   }
 
   toggleNode(node: any) {
-    console.log(node);
     if (!node.expanded) {
       this.employeeDataService.employees.forEach((emp) => {
-        if (emp.level === node.level ) {
+        if (emp.level === node.level) {
           const indexes = this.employeeDataService.employees
             .map((employee, index) => ({ employee, index }))
             .filter(({ employee }) => employee.level === node.level)
             .map(({ index }) => index);
 
-          indexes.forEach((i) => {
-            this.employeeDataService.employees[i].expanded = false;
+          indexes.forEach((i) => {            
+            this.employeeDataService.employees[i].expanded = false;              
+                      
           });
+        }
+      });
+    }else{
+      this.employeeDataService.employees.forEach((emp) => {
+        if (emp.level === node.level && emp.id !== node.id) {
+          emp.expanded = false;
         }
       });
     }
@@ -61,18 +67,19 @@ export class HierarchyComponent implements OnInit {
         }
       });
     }
+    this.data = this.createOrganizationChartData();
+
   }
 
-
-  createOrganizationChartData(): Employee[] {
-    const root = this.employees.find((emp) => emp.managerId === null);
+  createOrganizationChartData(): Employee[] {  
+    const root = this.employeeDataService.employees.find((emp) => emp.managerId === null);
     if (root) {
       return [this.createTreeNode(root, true)];
     }
     return [];
   }
 
-  createTreeNode(employee: Employee, expanded: boolean = false): Employee {
+  createTreeNode(employee: Employee, expanded: boolean = false): Employee {    
     return {
       ...employee,
       expanded: expanded,
@@ -83,7 +90,7 @@ export class HierarchyComponent implements OnInit {
   }
 
   getSubordinates(managerId: number): Employee[] {
-    return this.employees.filter(
+    return this.employeeDataService.employees.filter(
       (employee) => employee.managerId === managerId
     );
   }

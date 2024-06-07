@@ -16,7 +16,7 @@ export class EmployeeDataService {
       subordinates: [2, 3],
       designation: 'CEO',
       expanded: true,
-      level:1,
+      level: 1,
     },
     {
       id: 2,
@@ -27,8 +27,7 @@ export class EmployeeDataService {
       subordinates: [4, 5],
       designation: 'CTO',
       expanded: false,
-      level:2,
-
+      level: 2,
     },
     {
       id: 3,
@@ -39,7 +38,7 @@ export class EmployeeDataService {
       subordinates: [6],
       designation: 'CFO',
       expanded: false,
-      level:2,
+      level: 2,
     },
     {
       id: 4,
@@ -50,7 +49,7 @@ export class EmployeeDataService {
       subordinates: [8, 9],
       designation: 'Engineering Manager',
       expanded: false,
-      level:3,
+      level: 3,
     },
     {
       id: 5,
@@ -61,7 +60,7 @@ export class EmployeeDataService {
       subordinates: [10, 11],
       designation: 'Product Manager',
       expanded: false,
-      level:3,
+      level: 3,
     },
     {
       id: 6,
@@ -72,7 +71,7 @@ export class EmployeeDataService {
       subordinates: [7, 12],
       designation: 'Finance Manager',
       expanded: false,
-      level:3,
+      level: 3,
     },
     {
       id: 7,
@@ -83,7 +82,7 @@ export class EmployeeDataService {
       subordinates: [],
       designation: 'Accountant',
       expanded: false,
-      level:4,
+      level: 4,
     },
     {
       id: 8,
@@ -94,7 +93,7 @@ export class EmployeeDataService {
       subordinates: [],
       designation: 'Accountant',
       expanded: false,
-      level:4,
+      level: 4,
     },
     {
       id: 9,
@@ -105,7 +104,7 @@ export class EmployeeDataService {
       subordinates: [],
       designation: 'Accountant',
       expanded: false,
-      level:4,
+      level: 4,
     },
     {
       id: 10,
@@ -116,7 +115,7 @@ export class EmployeeDataService {
       subordinates: [],
       designation: 'Accountant',
       expanded: false,
-      level:4,
+      level: 4,
     },
     {
       id: 11,
@@ -127,7 +126,7 @@ export class EmployeeDataService {
       subordinates: [],
       designation: 'Accountant',
       expanded: false,
-      level:4,
+      level: 4,
     },
     {
       id: 12,
@@ -138,7 +137,7 @@ export class EmployeeDataService {
       subordinates: [],
       designation: 'Accountant',
       expanded: false,
-      level:4,
+      level: 4,
     },
   ];
   private employeesSubject = new BehaviorSubject<Employee[]>(this.employees);
@@ -157,12 +156,11 @@ export class EmployeeDataService {
     return [];
   }
 
-  addSubordinate(managerId: number, employee: Employee) {    
+  addSubordinate(managerId: number, employee: Employee) {
     const manager = this.employees.find((emp) => emp.id === managerId);
     if (manager) {
       manager.subordinates = manager.subordinates ?? [];
       if (manager.subordinates.length < 5) {
-
         this.employees.push(employee);
         manager.subordinates.push(employee.id);
         this.employeesSubject.next([...this.employees]);
@@ -207,6 +205,11 @@ export class EmployeeDataService {
       newManager.subordinates = newManager.subordinates || [];
       newManager.subordinates.push(employeeId);
       employee.managerId = newManagerId;
+      if (newManager.level) {
+        const newLevel = newManager.level + 1;
+        employee.level = newLevel;
+      }
+
       this.employeesSubject.next([...this.employees]);
     }
   }
